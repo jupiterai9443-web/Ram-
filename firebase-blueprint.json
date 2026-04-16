@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "A customer order containing multiple anklet designs.",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string", "description": "Name of the customer" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "totalQuantity": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "designId": { "type": "string" },
+              "kadap": { "type": "string" },
+              "gajji": { "type": "string" },
+              "size": { "type": "number" },
+              "quantity": { "type": "number" }
+            },
+            "required": ["designId", "kadap", "gajji", "size", "quantity"]
+          }
+        }
+      },
+      "required": ["customerName", "status", "totalQuantity", "createdAt", "items"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A user of the application (admin).",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin"] }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Stores all customer orders."
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user roles."
+    }
+  }
+}
